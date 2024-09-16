@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class SupplyUseCaseTest {
+public class SupplyUseCaseTests {
     @Mock
     private ISupplyPersistencePort supplyPersistencePort;
 
