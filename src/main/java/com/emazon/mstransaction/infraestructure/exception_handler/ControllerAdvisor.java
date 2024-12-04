@@ -1,6 +1,7 @@
 package com.emazon.mstransaction.infraestructure.exception_handler;
 
 import com.emazon.mstransaction.adapters.driven.jpa.mysql.util.exception.StockUpdateException;
+import com.emazon.mstransaction.infraestructure.utils.FeignErrorUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import feign.FeignException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
@@ -48,4 +50,12 @@ public class ControllerAdvisor {
                 exception.getMessage(),
                 HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now()));
     }
+
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<String> handleFeignException(FeignException e) {
+        String errorMessage = FeignErrorUtil.extractErrorMessage(e.contentUTF8());
+        HttpStatus status = HttpStatus.valueOf(e.status());
+        return ResponseEntity.status(status).body(errorMessage);
+    }
+
 }

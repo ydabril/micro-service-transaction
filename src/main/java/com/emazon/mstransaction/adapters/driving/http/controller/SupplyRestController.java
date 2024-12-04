@@ -1,6 +1,7 @@
 package com.emazon.mstransaction.adapters.driving.http.controller;
 
 import com.emazon.mstransaction.adapters.driving.http.dto.request.AddSuppliesRequest;
+import com.emazon.mstransaction.adapters.driving.http.dto.request.SaleRequest;
 import com.emazon.mstransaction.adapters.driving.http.mapper.ISupplyRequestMapper;
 import com.emazon.mstransaction.domain.api.ISupplyServicePort;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/transaction")
@@ -25,7 +27,7 @@ public class SupplyRestController {
     private  final ISupplyServicePort supplyServicePort;
     private  final ISupplyRequestMapper supplyRequestMapper;
 
-    @PreAuthorize("hasRole('AUX_BODEGA')")
+    @PreAuthorize("hasRole('AUX_BODEGA') || hasRole('ADMIN')")
     @Operation(summary = "Add a supply", description = "Add new supplies to increase the stock of articles.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Supply successfully created and stock updated"),
@@ -36,6 +38,19 @@ public class SupplyRestController {
     public ResponseEntity<Void> addSupplies(@Valid @RequestBody AddSuppliesRequest request) {
         supplyServicePort.addSupplies(supplyRequestMapper.addSupplyRequest(request));
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+
+    @PreAuthorize("hasRole('CLIENT')")
+    @PostMapping("/sale")
+    public ResponseEntity<Void> addSale(@Valid @RequestBody SaleRequest request) {
+        supplyServicePort.addSale(supplyRequestMapper.toSaleModel(request));
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/next-date-restock/{articleId}")
+    public LocalDate getEstimatedNextRestockDate(@PathVariable Long articleId) {
+        return supplyServicePort.getEstimatedNextRestockDate(articleId);
     }
 
 }

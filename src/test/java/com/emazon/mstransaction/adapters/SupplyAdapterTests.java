@@ -39,8 +39,8 @@ public class SupplyAdapterTests {
     @Test
     void addSupply_ShouldCallStockFeignClientAndSaveSupply() {
         // Arrange
-        Supply supply = new Supply(1L, 10L, null); // Crea un objeto Supply de ejemplo
-        SupplyEntity supplyEntity = new SupplyEntity(); // Entidad que el mapper retornará
+        Supply supply = new Supply(1L, 10L, null, null);
+        SupplyEntity supplyEntity = new SupplyEntity();
 
         // Simula el comportamiento del mapper y repositorio
         when(supplyEntityMapper.toEntity(supply)).thenReturn(supplyEntity);
@@ -50,8 +50,8 @@ public class SupplyAdapterTests {
         supplyAdapter.addSupply(supply);
 
         // Assert
-        verify(stockFeignClient).updateStock(supply); // Verifica que FeignClient haya sido llamado
-        verify(supplyEntityMapper).toEntity(supply);  // Verifica que el mapper haya sido invocado
-        verify(supplyRepository).save(supplyEntity);  // Verifica que el repositorio haya guardado la entidad
+        verify(stockFeignClient).updateStock(supply);
+        verify(supplyEntityMapper).toEntity(supply);
+        verify(supplyRepository).save(supplyEntity);
     }
 }

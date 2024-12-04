@@ -50,7 +50,7 @@ public class SupplyControllerTests {
     void saveSupplyTest() throws Exception {
         AddSuppliesRequest suppliesRequest = new AddSuppliesRequest(1L, 10L);
 
-        Supply supply = new Supply(1L, 10L, null);
+        Supply supply = new Supply(1L, 10L, null, null);
 
         when(supplyRequestMapper.addSupplyRequest(any(AddSuppliesRequest.class))).thenReturn(supply);
         doNothing().when(supplyServicePort).addSupplies(any(Supply.class));

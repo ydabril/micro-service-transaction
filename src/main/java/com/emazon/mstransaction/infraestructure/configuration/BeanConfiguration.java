@@ -8,6 +8,8 @@ import com.emazon.mstransaction.adapters.driven.jpa.mysql.repository.ISupplyRepo
 import com.emazon.mstransaction.domain.spi.ISupplyPersistencePort;
 import com.emazon.mstransaction.domain.api.ISupplyServicePort;
 import com.emazon.mstransaction.domain.api.use_case.SupplyUseCase;
+import com.emazon.mstransaction.infraestructure.feign_client.CartFeignClient;
+import com.emazon.mstransaction.infraestructure.feign_client.ReportFeignClient;
 import com.emazon.mstransaction.infraestructure.feign_client.StockFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -19,9 +21,11 @@ public class BeanConfiguration {
     private final ISupplyRepository supplyRepository;
     private final ISupplyEntityMapper supplyEntityMapper;
     private final StockFeignClient stockFeignClient;
+    private  final CartFeignClient cartFeignClient;
+    private final ReportFeignClient reportFeignClient;
     @Bean
     public ISupplyPersistencePort supplyPersistencePort() {
-        return new SupplyAdapter(supplyEntityMapper, supplyRepository, stockFeignClient);
+        return new SupplyAdapter(supplyEntityMapper, supplyRepository, stockFeignClient, cartFeignClient, reportFeignClient);
     }
     @Bean
     public ISupplyServicePort supplyServicePort() {

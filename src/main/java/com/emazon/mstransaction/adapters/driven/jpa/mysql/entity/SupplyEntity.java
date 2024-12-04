@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,4 +23,6 @@ public class SupplyEntity {
     private Long quantity;
     @Column(name = "registration_date", nullable = false)
     private LocalDateTime registrationDate;
+    @Column(name = "estimated_next_restock_date", nullable = false)
+    private LocalDate estimatedRestockDate;
 }

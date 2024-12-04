@@ -27,7 +27,7 @@ public class SupplyUseCaseTests {
 
     @Test
     void SaveSupplyTest(){
-        Supply supply = new Supply(1L, 10L, null);
+        Supply supply = new Supply(1L, 10L, null, null);
         supply.setRegistrationDate(LocalDateTime.now());
 
         supplyUseCase.addSupplies(supply);

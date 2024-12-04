@@ -3,8 +3,6 @@ package com.emazon.mstransaction.infraestructure.configuration.interceptors;
 import com.emazon.mstransaction.infraestructure.Constants;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
